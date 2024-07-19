@@ -7,6 +7,8 @@
 
 #include "AdjacencyList.h"
 
+#include <functional>
+
 using namespace std;
 
 void AdjacencyList::InitializePageRank()
@@ -154,4 +156,25 @@ string AdjacencyList::GetStringRepresentationOutlinkCount()
 
 	return res;
 }
+
+bool AdjacencyList::IsVertice(string url)
+{
+	if (vertices.find(url) == vertices.end())
+		return false;
+
+	return true;
+}
+
+vector<string> AdjacencyList::CreateTestVec()
+{
+	vector<string> res;
+	auto iter = vertices.begin();
+
+	for (; iter != vertices.end(); iter++)
+		res.push_back(iter->first);
+
+	return res;
+}
+
+
 

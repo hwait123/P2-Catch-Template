@@ -48,4 +48,6 @@ public:
     void ParseInput(string input);
     string GetStringRepresentation();
     string GetStringRepresentationOutlinkCount();
+    bool IsVertice(string url);
+    vector<string> CreateTestVec();
 };

@@ -1,7 +1,9 @@
 #include <catch2/catch_test_macros.hpp>
 #include <iostream>
+#include <algorithm>
 
 // change if you choose to use a different header name
+
 #include "AdjacencyList.h"
 
 using namespace std;
@@ -72,7 +74,7 @@ ufl.edu 0.20
 
 }
 
-TEST_CASE("1 site pointing at 25 sites", "[flag]"){
+TEST_CASE("(1) 1 site pointing at 25 sites", "[flag]"){
     // the following is a "raw string" - you can write the exact input (without
     //   any indentation!) and it should work as expected
     string input = R"(25 2
@@ -142,7 +144,7 @@ zoom.us 0.00
     REQUIRE(actualOutputOutlinks == expectedOutputOutlinks);
 }
 
-TEST_CASE("25 sites pointing at 1 site", "[flag]"){
+TEST_CASE("(2) 25 sites pointing at 1 site", "[flag]"){
     // the following is a "raw string" - you can write the exact input (without
     //   any indentation!) and it should work as expected
     string input = R"(25 2
@@ -212,7 +214,7 @@ zoom.us 0.00
     REQUIRE(actualOutputOutlinks == expectedOutputOutlinks);
 }
 
-TEST_CASE("10k power iterations", "[flag]"){
+TEST_CASE("(3) 10k power iterations", "[flag]"){
     // the following is a "raw string" - you can write the exact input (without
     //   any indentation!) and it should work as expected
     string input = R"(7 10000
@@ -243,7 +245,7 @@ ufl.edu 0.24
     REQUIRE(actualOutputOutlinks == expectedOutputOutlinks);
 }
 
-TEST_CASE("Circular graph", "[flag]"){
+TEST_CASE("(4) Circular graph", "[flag]"){
     // the following is a "raw string" - you can write the exact input (without
     //   any indentation!) and it should work as expected
     string input = R"(5 10000
@@ -270,5 +272,33 @@ ufl.edu 0.20
 
     REQUIRE(actualOutput == expectedOutput);
     REQUIRE(actualOutputOutlinks == expectedOutputOutlinks);
+}
+
+TEST_CASE("(5) 10k lines of input", "[flag]") {
+
+    vector<string> expectedOutput, actualOutput;
+    AdjacencyList graph;
+    int i = 0;
+
+    while (i < 10000)
+    {
+        string randomInput = to_string(rand()) + ".com";
+
+        if (graph.IsVertice(randomInput))
+            continue;
+
+        expectedOutput.push_back(randomInput);
+
+        graph.AddLink("gmail.com", randomInput);
+
+        i++;
+    }
+
+    expectedOutput.push_back("gmail.com");
+    std::sort(expectedOutput.begin(), expectedOutput.end());
+
+    actualOutput = graph.CreateTestVec();
+
+    REQUIRE(actualOutput == expectedOutput);
 }
 
