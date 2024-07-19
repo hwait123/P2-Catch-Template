@@ -1,15 +1,48 @@
 #pragma once
 
 #include <string>
+#include <iomanip>
+#include <vector>
+#include <string>
+#include <map>
+#include <unordered_map>
 
 using namespace std;
 
-class AdjacencyList {
-    private:
-    //Think about what member variables you need to initialize
-    public:
-    //Think about what helper functions you will need in the algorithm
-    string PageRank(int n);
+struct GraphNode
+{
+    string url;
+    int numOutLinks;
+    vector <GraphNode*> inLinks;
+    float pageRank;
+
+    GraphNode(string url)
+    {
+        this->url = url;
+        numOutLinks = 0;
+        pageRank = 0;
+    }
 };
 
-// This class and method are optional.
+class AdjacencyList {
+
+private:
+
+    //initialize maps
+    map <string, GraphNode*> vertices;
+    unordered_map <string, float> pageRanks;
+
+    //setters
+    void InitializePageRank();
+    void SetPageRank();
+
+public:
+
+    //mutators
+    void PageRank(int n);
+    void AddLink(string in, string out);
+
+    //behaviors
+    void Print();
+
+};
