@@ -3,6 +3,8 @@
 #include <vector>
 #include <string>
 #include <map>
+#include <sstream>
+
 #include "AdjacencyList.h"
 
 using namespace std;
@@ -99,3 +101,57 @@ void AdjacencyList::Print()
 	}
 
 }
+
+void AdjacencyList::ParseInput(string input)
+{
+	stringstream sstream(input);
+	string temp;
+
+	getline(sstream, temp, '\n');
+
+	int powerIters = stoi(temp.substr(temp.find(' ') + 1));
+
+	while (!sstream.eof()) {
+		getline(sstream, temp, '\n');
+
+		string to, from;
+
+		from = temp.substr(0, temp.find(' '));
+		to = temp.substr((temp.find(' ') + 1));
+
+		AddLink(to, from);
+
+	}
+
+	PageRank(powerIters);
+}
+
+string AdjacencyList::GetStringRepresentation()
+{
+	string res;
+	auto iter = vertices.begin();
+
+	for(; iter != vertices.end(); iter++)
+	{
+		stringstream sstream;
+		sstream << setprecision(2) << fixed << iter->second->pageRank << std::endl;
+
+		string pagerank;
+		sstream >> pagerank;
+
+		res += iter->first + " " + pagerank + "\n";
+	}
+	return res;
+}
+
+string AdjacencyList::GetStringRepresentationOutlinkCount()
+{
+	string res;
+	auto iter = vertices.begin();
+
+	for(; iter != vertices.end(); iter++)
+		res += to_string(iter->second->numOutLinks) + " ";
+
+	return res;
+}
+

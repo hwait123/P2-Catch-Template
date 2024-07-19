@@ -6,13 +6,8 @@
 
 using namespace std;
 
-// prints the PageRank of all pages after p powerIterations in
-//ascending alphabetical order of webpages and rounding rank to two
-//decimal places
 
-// This class and method are optional. To accept the input, you can use this method:
-
-/*int main()
+int main()
 {
 	//initialize variables
 	int no_of_lines, power_iterations;
@@ -36,5 +31,4 @@ using namespace std;
 	//pageRank and print ranks
 	graph.PageRank(power_iterations);
 	graph.Print();
-
-}*/
+}

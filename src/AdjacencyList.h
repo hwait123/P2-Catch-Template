@@ -1,7 +1,6 @@
 #pragma once
 
 #include <string>
-#include <iomanip>
 #include <vector>
 #include <string>
 #include <map>
@@ -45,4 +44,8 @@ public:
     //behaviors
     void Print();
 
+    //tests
+    void ParseInput(string input);
+    string GetStringRepresentation();
+    string GetStringRepresentationOutlinkCount();
 };
