@@ -12,7 +12,7 @@ using namespace std;
 
 // This class and method are optional. To accept the input, you can use this method:
 
-int main()
+/*int main()
 {
 	//initialize variables
 	int no_of_lines, power_iterations;
@@ -37,4 +37,4 @@ int main()
 	graph.PageRank(power_iterations);
 	graph.Print();
 
-}
+}*/
