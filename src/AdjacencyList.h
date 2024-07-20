@@ -8,14 +8,14 @@
 
 using namespace std;
 
-struct GraphNode
+struct Vertex
 {
     string url;
     int numOutLinks;
-    vector <GraphNode*> inLinks;
+    vector <Vertex*> inLinks;
     float pageRank;
 
-    GraphNode(string url)
+    Vertex(string url)
     {
         this->url = url;
         numOutLinks = 0;
@@ -28,7 +28,7 @@ class AdjacencyList {
 private:
 
     //initialize maps
-    map <string, GraphNode*> vertices;
+    map <string, Vertex*> vertices;
     unordered_map <string, float> pageRanks;
 
     //setters

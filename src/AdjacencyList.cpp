@@ -71,7 +71,7 @@ void AdjacencyList::AddLink(string in, string out)
 	if (vertices.find(in) == vertices.end())
 	{
 		//create new node and add to map
-		GraphNode* newIn = new GraphNode(in);
+		Vertex* newIn = new Vertex(in);
 		vertices[in] = newIn;
 	}
 
@@ -79,7 +79,7 @@ void AdjacencyList::AddLink(string in, string out)
 	if (vertices.find(out) == vertices.end())
 	{
 		//create new node and add to map
-		GraphNode* newOut = new GraphNode(out);
+		Vertex* newOut = new Vertex(out);
 		vertices[out] = newOut;
 	}
 
@@ -137,7 +137,7 @@ string AdjacencyList::GetStringRepresentation()
 	{
 		//roundabout way to set precision of float pagerank value
 		stringstream sstream;
-		sstream << setprecision(2) << fixed << iter->second->pageRank << std::endl;
+		sstream << setprecision(2) << fixed << iter->second->pageRank << endl;
 		string pagerank;
 		sstream >> pagerank;
 
