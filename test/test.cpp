@@ -61,6 +61,7 @@ maps.com 0.30
 ufl.edu 0.20
 )";
 
+    //test outlinks
     string expectedOutputOutlinks = "1 1 2 1 2 ";
 
     AdjacencyList graph;
@@ -248,6 +249,7 @@ ufl.edu 0.24
 TEST_CASE("(4) Circular graph", "[flag]"){
     // the following is a "raw string" - you can write the exact input (without
     //   any indentation!) and it should work as expected
+    // 10k power iterations because pagerank should always be 1/|V|
     string input = R"(5 10000
 google.com gmail.com
 gmail.com facebook.com
@@ -276,27 +278,34 @@ ufl.edu 0.20
 
 TEST_CASE("(5) 10k lines of input", "[flag]") {
 
+    //initalize variables
+    //including vectors to hold output
     vector<string> expectedOutput, actualOutput;
     AdjacencyList graph;
     int i = 0;
 
+    //create 10k links to gmail.com
     while (i < 10000)
     {
+        //generate random url
         string randomInput = to_string(rand()) + ".com";
 
+        //ir url exists, generate again
         if (graph.IsVertice(randomInput))
             continue;
 
+        //add link to graph and add url to expectedOutput vector
         expectedOutput.push_back(randomInput);
-
         graph.AddLink("gmail.com", randomInput);
 
         i++;
     }
 
+    //add gmail.com to expectedOutput and sort vector
     expectedOutput.push_back("gmail.com");
     std::sort(expectedOutput.begin(), expectedOutput.end());
 
+    //generate actualOutput vector
     actualOutput = graph.CreateTestVec();
 
     REQUIRE(actualOutput == expectedOutput);

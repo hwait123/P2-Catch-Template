@@ -109,22 +109,22 @@ void AdjacencyList::ParseInput(string input)
 	stringstream sstream(input);
 	string temp;
 
+	//retreive power iterations number from first line of input
 	getline(sstream, temp, '\n');
-
 	int powerIters = stoi(temp.substr(temp.find(' ') + 1));
 
+	//get each line of input string
 	while (!sstream.eof()) {
 		getline(sstream, temp, '\n');
 
-		string to, from;
-
-		from = temp.substr(0, temp.find(' '));
-		to = temp.substr((temp.find(' ') + 1));
+		//assign from and to variables and add link
+		string from = temp.substr(0, temp.find(' '));
+		string to = temp.substr((temp.find(' ') + 1));
 
 		AddLink(to, from);
-
 	}
 
+	//perform pagerank using power iterations number
 	PageRank(powerIters);
 }
 
@@ -135,12 +135,13 @@ string AdjacencyList::GetStringRepresentation()
 
 	for(; iter != vertices.end(); iter++)
 	{
+		//roundabout way to set precision of float pagerank value
 		stringstream sstream;
 		sstream << setprecision(2) << fixed << iter->second->pageRank << std::endl;
-
 		string pagerank;
 		sstream >> pagerank;
 
+		//append string literal with vertice's url and pagerank
 		res += iter->first + " " + pagerank + "\n";
 	}
 	return res;
@@ -151,6 +152,7 @@ string AdjacencyList::GetStringRepresentationOutlinkCount()
 	string res;
 	auto iter = vertices.begin();
 
+	//append numOutLinks of each vertice to res string
 	for(; iter != vertices.end(); iter++)
 		res += to_string(iter->second->numOutLinks) + " ";
 
@@ -159,6 +161,7 @@ string AdjacencyList::GetStringRepresentationOutlinkCount()
 
 bool AdjacencyList::IsVertice(string url)
 {
+	//check if given vertice exists
 	if (vertices.find(url) == vertices.end())
 		return false;
 
@@ -170,6 +173,7 @@ vector<string> AdjacencyList::CreateTestVec()
 	vector<string> res;
 	auto iter = vertices.begin();
 
+	//append vertice's url to vector
 	for (; iter != vertices.end(); iter++)
 		res.push_back(iter->first);
 
