@@ -38,16 +38,16 @@ private:
 public:
 
     //mutators
-    void PageRank(int n);
-    void AddLink(string in, string out);
+    void PageRank(const int& n);
+    void AddLink(const string& in, const string& out);
 
     //behaviors
-    void Print();
+    void Print() const;
 
     //tests
-    void ParseInput(string input);
+    void ParseInput(const string& input);
     string GetStringRepresentation();
     string GetStringRepresentationOutlinkCount();
-    bool IsVertice(string url);
+    bool IsVertice(const string& url);
     vector<string> CreateTestVec();
 };

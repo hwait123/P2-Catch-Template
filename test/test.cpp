@@ -280,7 +280,7 @@ TEST_CASE("(5) 10k lines of input", "[flag]") {
 
     //initalize variables
     //including vectors to hold output
-    vector<string> expectedOutput, actualOutput;
+    vector<string> expectedOutput;
     AdjacencyList graph;
     int i = 0;
 
@@ -306,7 +306,7 @@ TEST_CASE("(5) 10k lines of input", "[flag]") {
     std::sort(expectedOutput.begin(), expectedOutput.end());
 
     //generate actualOutput vector
-    actualOutput = graph.CreateTestVec();
+    vector<string> actualOutput = graph.CreateTestVec();
 
     REQUIRE(actualOutput == expectedOutput);
 }

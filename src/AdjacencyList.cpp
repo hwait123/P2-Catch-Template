@@ -4,10 +4,9 @@
 #include <string>
 #include <map>
 #include <sstream>
+#include <functional>
 
 #include "AdjacencyList.h"
-
-#include <functional>
 
 using namespace std;
 
@@ -16,7 +15,7 @@ void AdjacencyList::InitializePageRank()
 	auto iter = vertices.begin();
 
 	//initialize each page rank to 1/|V|
-	for (; iter != vertices.end(); iter++)
+	for (; iter != vertices.end(); ++iter)
 		iter->second->pageRank = 1.0 / vertices.size();
 }
 
@@ -25,11 +24,11 @@ void AdjacencyList::SetPageRank()
 	auto iter = vertices.begin();
 
 	//use pageRank unordered_map to update pageRank values after power iteration
-	for (; iter != vertices.end(); iter++)
+	for (; iter != vertices.end(); ++iter)
 		iter->second->pageRank = pageRanks[iter->first];
 }
 
-void AdjacencyList::PageRank(int n)
+void AdjacencyList::PageRank(const int& n)
 {
 	//set all pageRanks to 1/|V|
 	InitializePageRank();
@@ -40,19 +39,19 @@ void AdjacencyList::PageRank(int n)
 		auto iter = vertices.begin();
 
 		//iterate through each vertices element
-		for (; iter != vertices.end(); iter++)
+		for (; iter != vertices.end(); ++iter)
 		{
 			//create tempVec for readability and initialize tempRank
 			auto tempVec = iter->second->inLinks;
 			float tempRank = 0;
 
 			//if inLinks is not empty, begin iteration
-			if (tempVec.size() != 0)
+			if (!tempVec.empty())
 			{
 				//sum the values (1/inLink->numOutLinks) * pageRank for each inLink
 				//to calculate new pageRank
 				for (unsigned int i = 0; i < tempVec.size(); i++)
-					tempRank += (1.0 / tempVec[i]->numOutLinks) * tempVec[i]->pageRank;
+					tempRank += float(1.0 / tempVec[i]->numOutLinks) * tempVec[i]->pageRank;
 
 				//append tempRank to pageRanks
 				pageRanks[iter->first] = tempRank;
@@ -65,7 +64,7 @@ void AdjacencyList::PageRank(int n)
 	}
 }
 
-void AdjacencyList::AddLink(string in, string out)
+void AdjacencyList::AddLink(const string& in, const string& out)
 {
 	//if in is not found in vertices map
 	if (vertices.find(in) == vertices.end())
@@ -91,12 +90,12 @@ void AdjacencyList::AddLink(string in, string out)
 
 }
 
-void AdjacencyList::Print()
+void AdjacencyList::Print() const
 {
 	auto iter = vertices.begin();
 
 	//print each url and pageRank (using setprecision)
-	for (; iter != vertices.end(); iter++)
+	for (; iter != vertices.end(); ++iter)
 	{
 		cout << iter->first << " ";
 		cout << setprecision(2) << fixed << iter->second->pageRank << endl;
@@ -104,7 +103,7 @@ void AdjacencyList::Print()
 
 }
 
-void AdjacencyList::ParseInput(string input)
+void AdjacencyList::ParseInput(const string& input)
 {
 	stringstream sstream(input);
 	string temp;
@@ -133,7 +132,7 @@ string AdjacencyList::GetStringRepresentation()
 	string res;
 	auto iter = vertices.begin();
 
-	for(; iter != vertices.end(); iter++)
+	for(; iter != vertices.end(); ++iter)
 	{
 		//roundabout way to set precision of float pagerank value
 		stringstream sstream;
@@ -159,7 +158,7 @@ string AdjacencyList::GetStringRepresentationOutlinkCount()
 	return res;
 }
 
-bool AdjacencyList::IsVertice(string url)
+bool AdjacencyList::IsVertice(const string& url)
 {
 	//check if given vertice exists
 	if (vertices.find(url) == vertices.end())
@@ -174,7 +173,7 @@ vector<string> AdjacencyList::CreateTestVec()
 	auto iter = vertices.begin();
 
 	//append vertice's url to vector
-	for (; iter != vertices.end(); iter++)
+	for (; iter != vertices.end(); ++iter)
 		res.push_back(iter->first);
 
 	return res;
